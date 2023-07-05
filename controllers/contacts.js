@@ -8,41 +8,41 @@ const getAll = async (req, res) => {
   res.json(result);
 };
 
-// const getById = async (req, res) => {
-//   const { contactId } = req.params;
-//   const result = await contacts.getContactById(contactId);
-//   if (!result) {
-//     throw HttpError(404, "Not found");
-//   }
-//   res.json(result);
-// };
+const getById = async (req, res) => {
+  const { contactId } = req.params;
+  const result = await Contact.findById(contactId);
+  if (!result) {
+    throw HttpError(404, "Not found");
+  }
+  res.json(result);
+};
 
-// const add = async (req, res) => {
-//   const result = await contacts.addContact(req.body);
-//   res.status(201).json(result);
-// };
+const add = async (req, res) => {
+  const result = await Contact.create(req.body);
+  res.status(201).json(result);
+};
 
-// const deleteById = async (req, res) => {
-//   const { contactId } = req.params;
-//   const result = await contacts.removeContact(contactId);
-//   if (!result) {
-//     throw HttpError(404, "Not found");
-//   }
-//   res.json({ message: "Contact deleted", result });
-// };
+const deleteById = async (req, res) => {
+  const { contactId } = req.params;
+  const result = await Contact.findByIdAndRemove(contactId);
+  if (!result) {
+    throw HttpError(404, "Not found");
+  }
+  res.json({ message: "Contact deleted", result });
+};
 
-// const updateById = async (req, res) => {
-//   const { contactId } = req.params;
-//   const result = await contacts.updateContact(contactId, req.body);
-//   if (!result) {
-//     throw HttpError(404, "Not found");
-//   }
-//   res.json(result);
-// };
+const updateById = async (req, res) => {
+  const { contactId } = req.params;
+  const result = await Contact.findByIdAndUpdate(contactId, req.body);
+  if (!result) {
+    throw HttpError(404, "Not found");
+  }
+  res.json(result);
+};
 module.exports = {
   getAll: ctrlWrapper(getAll),
-  // getById: ctrlWrapper(getById),
-  // add: ctrlWrapper(add),
-  // deleteById: ctrlWrapper(deleteById),
-  // updateById: ctrlWrapper(updateById),
+  getById: ctrlWrapper(getById),
+  add: ctrlWrapper(add),
+  deleteById: ctrlWrapper(deleteById),
+  updateById: ctrlWrapper(updateById),
 };
